@@ -1,9 +1,6 @@
-from django.shortcuts import redirect, HttpResponseRedirect, render_to_response
-from django.core.urlresolvers import reverse
 from .models import Services, Vacancies, Contacts, Countries, Companies, Specializations
 from django_filters.views import FilterView
 from django_filters import FilterSet, ModelChoiceFilter
-from django.views.generic import TemplateView
 from django.views.generic.edit import CreateView
 from .forms import MessageForm
 from django.http import JsonResponse
