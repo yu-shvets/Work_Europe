@@ -1,8 +1,8 @@
 from django.shortcuts import redirect, HttpResponseRedirect, render_to_response
 from django.core.urlresolvers import reverse
-from .models import Services, Vacancies, Contacts
+from .models import Services, Vacancies, Contacts, Countries, Companies, Specializations
 from django_filters.views import FilterView
-from django_filters import FilterSet
+from django_filters import FilterSet, ModelChoiceFilter
 from django.views.generic import TemplateView
 from django.views.generic.edit import CreateView
 from .forms import MessageForm
@@ -10,6 +10,9 @@ from django.http import JsonResponse
 
 
 class VacanciesFilter(FilterSet):
+    country = ModelChoiceFilter(queryset=Countries.objects.all(), empty_label='All countries')
+    company = ModelChoiceFilter(queryset=Companies.objects.all(), empty_label='All companies')
+    specialization = ModelChoiceFilter(queryset=Specializations.objects.all(), empty_label='All specializations')
 
     class Meta:
         model = Vacancies
