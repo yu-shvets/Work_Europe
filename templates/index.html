@@ -1,0 +1,230 @@
+{% load static from staticfiles %}
+{% load widget_tweaks %}
+
+<!DOCTYPE html>
+<html lang="zxx">
+<head>
+	<meta charset="UTF-8">
+	<title>Company title</title>
+	<meta name="viewport" content="width=device-width" />
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i&amp;subset=cyrillic" rel="stylesheet">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
+	<link rel="stylesheet" href="{% static 'landing/css/screen.css' %}">
+	<!--[if lt IE 9]>
+    <script>
+      document.createElement('header');
+      document.createElement('nav');
+      document.createElement('main');
+      document.createElement('article');
+      document.createElement('aside');
+      document.createElement('footer');
+    </script>
+  <![endif]-->
+</head>
+<body>
+	<header class="header clearfix">
+			<div class="offset-lg-4-castom">
+				<a class="menu-show" href="#"><i class="fas fa-bars"></i></a>
+				<a class="hidden-menu" href="#"> <i class="fas fa-times"></i></a>
+				<nav class="header-nav">
+					<ul class="clearfix">
+						<li><a href="#aboutUs" class="header-nav__item scroll">About us</a></li>
+						<li><a href="#ourServices" class="header-nav__item scroll">Services</a></li>
+						<li><a href="#ourOffers" class="header-nav__item scroll">Offers</a></li>
+						<li><a href="#contact" class="header-nav__item scroll">Contact us</a></li>
+					</ul>
+				</nav>
+				<div class="header-soc">
+					<a href="#" class="header-soc__item"><i class="fab fa-facebook-f"></i></a>
+					<a href="#" class="header-soc__item"><i class="fab fa-vk"></i></a>
+					<a href="#" class="header-soc__item"><i class="fab fa-instagram"></i></a>
+				</div>
+			</div>
+	</header>
+	<section class="banner" id="banner" style="background-image: url({% static 'landing/images/banner.jpg' %});">
+		<h1 class="title-wrap">Your company title</h1>
+		<a href="#aboutUs" class="btn btn-bot scroll"><i class="fas fa-angle-down"></i></a>
+	</section>
+	<section class="aboutUs" id="aboutUs">
+		<div class="container">
+			<h2 class="title">
+				About us
+			</h2>
+			<div class="row">
+				<div class="col-lg-5 col-md-5">
+					<p class="aboutUs-title">
+						Cudowna jest tylko sama prawda.
+					</p>
+					<p class="aboutUs-desc">
+						Maurycy Maeterlinck
+					</p>
+				</div>
+				<div class="col-lg-7 col-md-7">
+					<div class="aboutUs-text">
+						RWZ Consulting to niemiecko-polska spółka consultingowa specjalizująca się w doradztwie prawnym na rzecz podmiotów gospodarczych, ze szczególnym uwzględnieniem przedsiębiorców na terenie Niemiec, Polski i Ukrainy. Na co dzień ułatwiamy obrót prawny, wspieramy przy zawieraniu umów, doradzamy podczas negocjacji oraz zakładaniu działalności w obsługiwanych regionach. Doradztwo prowadzone jest również w językach angielskim, hiszpańskim, niemieckim i rosyjskim.
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<section class="ourServices" id="ourServices">
+		<div class="container">
+			<h2 class="title">
+				Our services
+			</h2>
+			<div class="row">
+
+            {% for service in services %}
+
+				<div class="col-lg-4 col-md-4 col-sm-6">
+					<div class="ourServices-item">
+						<div class="ourServices-item__oh">
+							<a href="#" class="ourServices-item__link">
+								<img src="{{ service.image.url }}" alt="">
+							</a>
+							<p class="ourServices-item__text">
+								{{ service.description }}
+							</p>
+						</div>
+						<h6 class="ourServices-item__title">
+							{{ service.title }}
+						</h6>
+					</div>
+				</div>
+
+            {% endfor %}
+
+			</div>
+		</div>
+	</section>
+	<section class="ourOffers" id="ourOffers">
+		<div class="container">
+			<h2 class="title">
+				Our offers
+			</h2>
+
+			<form class="ourOffers-select" action="{% url 'home' %}#ourOffers" method="get">
+				<div class="row">
+
+                    {% for field in filter.form %}
+
+					<div class="col-lg-3 col-md-3">
+						<div class="ourOffers-select__item">
+
+                         {% render_field field %}
+
+						</div>
+					</div>
+
+                    {% endfor %}
+
+					<div class="col-lg-3 col-md-3">
+						<button class="ourOffers-select__btn">Apply</button>
+					</div>
+				</div>
+			</form>
+			<div class="ourOffers-results">
+				<ul>
+                    {% for vacancy in object_list %}
+					<li>{{ vacancy.title }}</li>
+                    {% endfor %}
+				</ul>
+			</div>
+		</div>
+	</section>
+	<section class="contact" id="contact">
+		<div class="container">
+			<h2 class="title">
+				Contacts
+			</h2>
+			<div class="row">
+
+                {% for contact in contacts %}
+
+				<div class="col-lg-4 col-md-4 col-sm-4 castom-col-s-4">
+					<div class="contact-items">
+						<div class="contact-items__phone contact-items__list clearfix">
+							<div class="img"><i class="fas fa-phone"></i></div>
+							<div class="text">
+								<p class="top">
+									Phone
+								</p>
+								<a class="bot" href="callto::{{ contact.phone }}">{{ contact.phone }}</a>
+							</div>
+						</div>
+						<div class="contact-items__phone contact-items__list clearfix">
+							<div class="img"><i class="fas fa-map-marker-alt"></i></div>
+							<div class="text">
+								<p class="top">
+									Address
+								</p>
+								<a class="bot" href="https://www.google.com.ua/maps">{{ contact.address|linebreaksbr }}</a>
+							</div>
+						</div>
+						<div class="contact-items__phone contact-items__list clearfix">
+							<div class="img"><i class="fas fa-envelope"></i></div>
+							<div class="text">
+								<p class="top">
+									Email
+								</p>
+								<a class="bot" href="mailto:lipsum@rwzconsulting.com">{{ contact.mail }}</a>
+							</div>
+						</div>
+					</div>
+				</div>
+
+                {% endfor %}
+
+			</div>
+			<div class="contact-bot">
+				<div class="row">
+					<div class="col-lg-6 col-md-6">
+						<div class="contact-bot__item">
+							<h6 class="title">
+								Found a suitable offer?
+							</h6>
+							<p class="desc">
+								Please, fill out the form and we will contact you as soon as possible
+							</p>
+							<a href="#" class="btn btn-contact-bot">Get started</a>
+						</div>
+					</div>
+					<div class="col-lg-6 col-md-6">
+						<div class="contact-bot__item">
+							<h6 class="title">
+								 Any questions?
+							</h6>
+							<p class="desc">
+								Please, fill out the form and we will contact you as soon as possible
+							</p>
+							<form id="customer_form" class="contact-bot-form" method="post" action="{% url 'message_create' %}">
+                                {% csrf_token %}
+                                {% render_field form.mail class="form-it" %}
+                                {% render_field form.message class="form-it" style="line-height: 25px" %}
+								<button class="btn btn-contact-bot">Send</button>
+							</form>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<footer class="footer clearfix">
+		<p class="footer-item">
+			© All rights reserved!
+		</p>
+		<p class="footer-item">
+			designed by GoFriends
+		</p>
+		<a href="#banner" class="footer-item scroll">
+			<i class="fas fa-caret-up"></i>
+		</a>
+	</footer>
+
+	<script src="{% static 'landing/js/jquery-3.2.1.min.js' %}"></script>
+	<script src={% static 'landing/js/jquery-ui.min.js' %}></script>
+	<script src="{% static 'landing/js/js.js' %}"></script>
+</body>
+</html>
